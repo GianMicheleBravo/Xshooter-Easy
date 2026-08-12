@@ -1,7 +1,7 @@
 # Xshooter-Easy
 A set of scripts meant to "easily" reduce scientific data from the XSHOOTER instrument into usable spectra.
 
-README:
+# README:
 
 Version 1, May 2025.
 
@@ -10,9 +10,9 @@ I am Gian Michele Bravo and I learned how to reduce Xshooter data through trial 
 This tool is meant for you to reduce Xshooter data with less error and more useful science.
 
 
-QUICK START:
+## QUICK START:
 
-Prerequisites:
+### Prerequisites:
 1) A bash interpreter
 2) A python3 interpreter
 3) The astropy python package
@@ -22,7 +22,7 @@ Prerequisites:
 4) The esorex recipe runner
 5) The xshooter pipeline recipes
 
-Execution:
+### Execution:
 1) Take all the necessary input .fits files and put them in the "Input" folder.
 2) Open the terminal in the "Xshooter Easy" directory
 2) Run the command
@@ -34,7 +34,7 @@ python3 plot_2d.py
 Furthermore, the output files from the data reduction will be in the "Output" folder.
 
 
-POSSIBLE PROBLEMS:
+## POSSIBLE PROBLEMS:
 
 In case something breaks, here are a few problems that the Xshooter Easy Tool might have:
 
@@ -58,13 +58,12 @@ Depending on what input data the tool is given, the conditions meant to recognis
 	xsh_all_recipes_UVB.sh
 scripts. At worst, this requires additional scripts to produce the data products that the other observing modes require for data reduction.
 
-UNDERSTANDING WHAT IS SUPPOSED TO HAPPEN:
+## UNDERSTANDING WHAT IS SUPPOSED TO HAPPEN:
 
 It appears that you're out of luck, and you will have to learn what you're actually doing, so that you can understand what you are doing wrong.
 In this case, here is an explanation of how Xshooter data reduction works, as well as information as to where you can find more resources. I will try to keep this as clear and concise as possible. I will put particular focus on information that I had difficulty finding on the the information manuals that already exist, and had to learn myself through trial and error.
 
-
-The Xshooter instrument:
+### The Xshooter instrument:
 
 The Xshooter instrument is an amalgamation of mirrors, echelle gratings, slits, shutters, lenses, beam splitters and CCDs. The point of the instrument is to take all (or at least the majority) of the light that a normal star emits and that passes through the atmosphere, and give the spectra for that light. In practice, this gives a spectra from the ultraviolet to the near infrared. It uses the echelle gratings to split the light along its wavelengths, then projects it onto the CCDs, where the position of the incoming photons corresponds to their wavelength.
 
@@ -82,8 +81,7 @@ ifu_offset
 
 The "Xshooter Easy" tool reduces observations taken in the slit_stare mode.
 
-
-The pipeline:
+### The pipeline:
 
 The data reduction is divided in different so called recipes. Each recipe is a single script which takes a series of files, the information about what those files are and eventual user-added parameters. From that, it produces new, useful files. As it turns out, all of the input and output files used by xshooter recipes are of the .fits file format. This can be 2D CCD scans as well as data tables.
 
@@ -108,7 +106,7 @@ XSHOO.2024-10-04T11:37:41.743.fits	FLAT_SLIT_VIS
 This is the .sof file in its entirety. The first row contains the file name of a map detailing bad pixels on the CCD, marked with the so called "tag" BP_MAP_RP_VIS. It contains a table that, for each arm, gives the wavelength that the arm can achieve. This file is tagged with SPECTRAL_FORMAT_TAB_VIS. BP_MAP_RP_VIS and SPECTRAL_FORMAT_TAB_VIS are so called "static calibration data," meaning that you can dowload them directly from the ESO archives without the need to produce them yourself. The next row contains is MASTER_BIAS_VIS.fits. This file is actually created by one previous recipe, the xsh_mbias recipe, and as such doesn't follow the naming conventions of the other files. Similarly, ORDER_TAB_CENTR_VIS.fits on the next row is created by the xsh_orderpos recipe. Lastly, there are multiple rows with the tag FLAT_SLIT_VIS. These are flat frames, taken when the telescope is pointing at a flat lamp. Multiple different files are included for the recipe to be able to average out noise.
 
 
-The Xshooter Easy tool:
+### The Xshooter Easy tool:
 
 Here's the good news: the "Xshooter Easy" tool is supposed sort your raw data, produce all the .sof files and run all the recipes needed for you. All of this shoud happen automatically when running the xsh_all_recipes.sh. Here's the bad news: if you're reading this, it is likely that something didn't work.
 
@@ -183,7 +181,7 @@ xsh_conditions_UVB.py
 All of these scripts can cause problems. However, they *have run without error* at least once in testing.
 
 
-USEFUL LINKS:
+## USEFUL LINKS:
 
 The XSHOOTER pipeline user manual I used to develop this script is found at:
 https://ftp.eso.org/pub/dfs/pipelines/instruments/xshooter/xshoo-pipeline-manual-3.8.3.pdf
@@ -195,7 +193,7 @@ And finally, the official reference paper detailing the XSHOOTER instrument is a
 https://www.eso.org/sci/facilities/paranal/instruments/xshooter/doc/xshooter_Vernet2011.pdf
 
 
-CONTACT:
+## CONTACT:
 
 You can send me an email at
 gi3100br-s@student.lu.se
