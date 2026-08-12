@@ -114,10 +114,10 @@ The first step in reducing the data is to sort the input files in appropriate fo
 At this point, it is worth to mention how you can find the instrument arm of a given .fits file. This information is found in the header, under the header key "HIERARCH ESO SEQ ARM".
 
 Xshooter Easy finds the correct files to use for a given recipe simply by looking through all files available, testing wheter each file corresponds to a specific tag that a recipe needs, and if this condition is met, writing it down. The conditions can be found in the xsh_conditions_NIR.py, xsh_conditions_VIS.py and xsh_conditions_UVB.py python scripts. These conditions determine whether a file corresponds to a given tag or not based on information in the file's header. A header is simply a series of keywords with corresponding value and comments. You can view a header yourself simply using the ds9 .fits viewer, or with the following python3 commands:
->>> import astropy.table
->>> dat = astropy.io.fits.open('M.XSHOOTER.2019-04-04T09:51:11.626.fits')
->>> header = dat[0].header
->>> header
+'''import astropy.table
+dat = astropy.io.fits.open('M.XSHOOTER.2019-04-04T09:51:11.626.fits')
+header = dat[0].header
+header'''
 Of course, you can replace the file M.XSHOOTER.2019-04-04T09:51:11.626.fits with whatever .fits file you want.
 Calling a header key can also be done simply, and is done throughout the Xshooter Easy tool. Another important header key, which is found for all the non-raw frames (in other words, static calibration data and processed frames) is HIERARCH ESO PRO CATG. For many recipes, this key contains the tag that the file corresponds to. As an example, following the previous code:
 >>> header['HIERARCH ESO PRO CATG']
