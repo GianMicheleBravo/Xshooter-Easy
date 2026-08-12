@@ -90,7 +90,7 @@ esorex xsh_mflat xsh_mflat.sof
 Translated to words, this means "use esorex to run the xsh_mflat recipe using the series of files (sof) given by the text file xsh_mflat.sof"
 The series of files is a necessary part of running each recipe. In practice, it is a text file containing the name of all files used by the recipe, as well as what they are. As an example, for the xsh_mflat recipe in the VIS arm, the .sof file might look as folllowing:
 
-M.XSHOOTER.2019-04-04T10:02:33.076.fits	BP_MAP_RP_VIS
+´´´M.XSHOOTER.2019-04-04T10:02:33.076.fits	BP_MAP_RP_VIS
 M.XSHOOTER.2019-04-04T10:19:47.773.fits	SPECTRAL_FORMAT_TAB_VIS
 MASTER_BIAS_VIS.fits			MASTER_BIAS_VIS
 ORDER_TAB_CENTR_VIS.fits		ORDER_TAB_CENTR_VIS
@@ -101,7 +101,7 @@ XSHOO.2024-10-03T13:13:18.643.fits	FLAT_SLIT_VIS
 XSHOO.2024-10-03T13:14:03.676.fits	FLAT_SLIT_VIS
 XSHOO.2024-10-04T11:34:22.186.fits	FLAT_SLIT_VIS
 XSHOO.2024-10-04T11:36:01.854.fits	FLAT_SLIT_VIS
-XSHOO.2024-10-04T11:37:41.743.fits	FLAT_SLIT_VIS
+XSHOO.2024-10-04T11:37:41.743.fits	FLAT_SLIT_VIS´´´
 
 This is the .sof file in its entirety. The first row contains the file name of a map detailing bad pixels on the CCD, marked with the so called "tag" BP_MAP_RP_VIS. It contains a table that, for each arm, gives the wavelength that the arm can achieve. This file is tagged with SPECTRAL_FORMAT_TAB_VIS. BP_MAP_RP_VIS and SPECTRAL_FORMAT_TAB_VIS are so called "static calibration data," meaning that you can dowload them directly from the ESO archives without the need to produce them yourself. The next row contains is MASTER_BIAS_VIS.fits. This file is actually created by one previous recipe, the xsh_mbias recipe, and as such doesn't follow the naming conventions of the other files. Similarly, ORDER_TAB_CENTR_VIS.fits on the next row is created by the xsh_orderpos recipe. Lastly, there are multiple rows with the tag FLAT_SLIT_VIS. These are flat frames, taken when the telescope is pointing at a flat lamp. Multiple different files are included for the recipe to be able to average out noise.
 
@@ -114,14 +114,14 @@ The first step in reducing the data is to sort the input files in appropriate fo
 At this point, it is worth to mention how you can find the instrument arm of a given .fits file. This information is found in the header, under the header key "HIERARCH ESO SEQ ARM".
 
 Xshooter Easy finds the correct files to use for a given recipe simply by looking through all files available, testing wheter each file corresponds to a specific tag that a recipe needs, and if this condition is met, writing it down. The conditions can be found in the xsh_conditions_NIR.py, xsh_conditions_VIS.py and xsh_conditions_UVB.py python scripts. These conditions determine whether a file corresponds to a given tag or not based on information in the file's header. A header is simply a series of keywords with corresponding value and comments. You can view a header yourself simply using the ds9 .fits viewer, or with the following python3 commands:
-'''import astropy.table
+´´´import astropy.table
 dat = astropy.io.fits.open('M.XSHOOTER.2019-04-04T09:51:11.626.fits')
 header = dat[0].header
-header'''
+header´´´
 Of course, you can replace the file M.XSHOOTER.2019-04-04T09:51:11.626.fits with whatever .fits file you want.
 Calling a header key can also be done simply, and is done throughout the Xshooter Easy tool. Another important header key, which is found for all the non-raw frames (in other words, static calibration data and processed frames) is HIERARCH ESO PRO CATG. For many recipes, this key contains the tag that the file corresponds to. As an example, following the previous code:
->>> header['HIERARCH ESO PRO CATG']
-'BP_MAP_RP_NIR'
+´´´>>> header['HIERARCH ESO PRO CATG']
+'BP_MAP_RP_NIR'´´´
 This means that the people who made the static calibration file M.XSHOOTER.2019-04-04T09:51:11.626.fits helpfully added a line in it that said this file corresponds to a map of bad pixels on the CCD for near-infrared.
 
 The Xshooter Easy tool uses this and other keys to identify correct files and write them in .sof files, and then feeds those .sof files to the recipes. If that part of the program works, you should be able to see that these files have been created in the 'NIR', 'VIS' and/or 'UVB' folders.
